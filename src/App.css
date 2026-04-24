@@ -1,0 +1,350 @@
+/* Global Resets and Clean Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  background-color: #f9f9f9; /* Blanc cassé pour douceur */
+  color: #333; /* Gris foncé pour lisibilité */
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* App Container */
+.App {
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Logo (Simple et Sobre) */
+.App-logo {
+  height: 50px;
+  pointer-events: none;
+  margin-bottom: 20px;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.App-logo:hover {
+  opacity: 1;
+}
+
+/* Header (Carte Élégante) */
+.App-header {
+  background-color: #ffffff; /* Blanc pur */
+  min-height: 85vh;
+  width: 100%;
+  max-width: 550px; /* Compact pour focus */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Ombre douce */
+  margin: 20px 0;
+  border: 1px solid #e8e8e8; /* Bordure subtile */
+}
+
+.App-header h1 {
+  font-size: 1.8rem;
+  font-weight: 400; /* Léger pour élégance */
+  color: #333;
+  margin-bottom: 30px;
+  letter-spacing: 0.5px;
+}
+
+/* Links */
+.App-link {
+  color: #5a6c7d; /* Gris-bleu sobre */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.App-link:hover {
+  color: #3a4b5c;
+}
+
+/* TaskManager Styles (Minimal et Beau) */
+.task-manager {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* Search Toggle (Icone Discrète) */
+.search-toggle {
+  display: inline-block;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  margin-bottom: 20px;
+}
+
+.search-toggle:hover {
+  background-color: #f0f0f0;
+}
+
+.search-icon {
+  width: 22px;
+  height: 22px;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.search-toggle:hover .search-icon {
+  color: #5a6c7d;
+}
+
+/* Search Bar (Slide-In Sobre) */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 25px;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.search-bar.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+#searchInput {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px 0 0 8px;
+  outline: none;
+  font-size: 0.95rem;
+  background-color: #fafafa;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#searchInput:focus {
+  border-color: #5a6c7d;
+  box-shadow: 0 0 4px rgba(90, 108, 125, 0.2);
+}
+
+.search-bar button {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  background-color: #f5f5f5;
+  color: #333;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease;
+}
+
+.search-bar button:hover {
+  background-color: #e8e8e8;
+}
+
+/* Add Task */
+.add-task {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.add-task input {
+  flex: 1;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  font-size: 1rem;
+  background-color: #fafafa;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-task input:focus {
+  border-color: #5a6c7d;
+  box-shadow: 0 0 4px rgba(90, 108, 125, 0.2);
+}
+
+.add-task button {
+  padding: 12px 18px;
+  background-color: #5a6c7d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-task button:hover {
+  background-color: #4a5b6c;
+  box-shadow: 0 2px 8px rgba(90, 108, 125, 0.3);
+}
+
+/* Task List */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background-color: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  cursor: move;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.task-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-color: #d0d0d0;
+}
+
+/* Drag States (Subtil et Naturel) */
+.task-item.dragging {
+  opacity: 0.8;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.task-item.drag-over {
+  outline: 1px dashed #5a6c7d;
+  background-color: #f8f8f8;
+}
+
+/* Task Content */
+.task-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  background-color: #fff;
+}
+
+.task-checkbox.completed {
+  background-color: #5a6c7d;
+  border-color: #5a6c7d;
+}
+
+.task-text {
+  flex: 1;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+.task-text.completed {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.task-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.task-actions button:hover {
+  background-color: #f0f0f0;
+}
+
+.task-actions .edit {
+  color: #5a6c7d;
+}
+
+.task-actions .delete {
+  color: #d9534f;
+}
+
+/* Edit Mode */
+.edit-input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+  background-color: #fafafa;
+}
+
+.edit-buttons button {
+  margin-left: 8px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.edit-buttons .save {
+  background-color: #5cb85c;
+  color: white;
+}
+
+.edit-buttons .cancel {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .App-header {
+    padding: 25px 20px;
+    min-height: 90vh;
+  }
+
+  .App-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .task-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .add-task {
+    flex-direction: column;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  #searchInput {
+    border-radius: 8px;
+  }
+
+  .search-bar button {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+}

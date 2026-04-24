@@ -1,0 +1,26 @@
+.search-toggle {
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.search-icon {
+  width: 24px;
+  height: 24px;
+  color: #333;
+}
+.search-bar {
+  display: none; /* Hidden by default */
+  margin-bottom: 10px;
+  animation: slideIn 0.3s ease-out;
+}
+.search-bar.show {
+  display: flex;
+  align-items: center;
+}
+#searchInput {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+ 
+    font-size: 16px;    }
