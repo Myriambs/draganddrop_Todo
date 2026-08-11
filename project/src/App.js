@@ -25,15 +25,28 @@ const TaskManager = () => {
     return tasks.filter(task => task.text.toLowerCase().includes(lowerQuery));
   }, [tasks, searchQuery]);
 
-  const handleDrop = () => {
-    const copyTasks = [...tasks];
-    const draggedItemContent = copyTasks[dragItem.current];
-    copyTasks.splice(dragItem.current, 1);
-    copyTasks.splice(dragOverItem.current, 0, draggedItemContent);
+const handleDrop = () => {
+  const sourceIndex = dragItem.current;
+  const targetIndex = dragOverItem.current;
+
+  if (
+    sourceIndex === null ||
+    targetIndex === null ||
+    sourceIndex === targetIndex
+  ) {
     dragItem.current = null;
     dragOverItem.current = null;
-    setTasks(copyTasks);
-  };
+    return;
+  }
+
+  const updatedTasks = [...tasks];
+  const [movedTask] = updatedTasks.splice(sourceIndex, 1);
+  updatedTasks.splice(targetIndex, 0, movedTask);
+
+  dragItem.current = null;
+  dragOverItem.current = null;
+  setTasks(updatedTasks);
+};
 
   const addTask = () => {
     if (newTask.trim()) {
@@ -94,10 +107,9 @@ const TaskManager = () => {
   }, [isSearchVisible]);
 
   return (
-    // WHY: data-testid="app" → lets Playwright verify the whole app loaded
     <div data-testid="app" className="max-w-2xl mx-auto p-6 bg-gray-50 min-h-screen">
       <div className="bg-white rounded-lg shadow-lg p-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">
+        <h1 data-testid="app-title" className="text-3xl font-bold text-gray-800 mb-8 text-center">
           Simple Task Manager (Drag & Drop ✅)
         </h1>
 
@@ -105,16 +117,24 @@ const TaskManager = () => {
           WHY: data-testid="search-toggle" → Playwright needs to CLICK this icon
           to open the search bar. Without this, it's hard to target an SVG.
         */}
-        <div
-          data-testid="search-toggle"
-          className="search-toggle cursor-pointer inline-block mb-4"
-          onClick={toggleSearch}
-        >
-          <svg className="search-icon w-6 h-6 text-gray-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.35-4.35"></path>
-          </svg>
-        </div>
+ <button
+  type="button"
+  data-testid="search-toggle"
+  aria-label={isSearchVisible ? "Close search" : "Open search"}
+  className="search-toggle cursor-pointer inline-block mb-4"
+  onClick={toggleSearch}
+>
+  <svg
+    className="search-icon w-6 h-6 text-gray-700"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
+    <circle cx="11" cy="11" r="8"></circle>
+    <path d="m21 21-4.35-4.35"></path>
+  </svg>
+</button>
 
         {/* 
           WHY: data-testid="search-bar" → lets Playwright check if the bar
@@ -122,6 +142,8 @@ const TaskManager = () => {
         */}
         <div
           data-testid="search-bar"
+            data-search-open={isSearchVisible}
+
           className={`search-bar mb-6 flex items-center gap-2 transition-all duration-300 ${
             isSearchVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'
           }`}
@@ -152,7 +174,7 @@ const TaskManager = () => {
             type="text"
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && addTask()}
+            onKeyPress={(e) => {if (e.key === "Enter" ) addTask()}}
             placeholder="Add a new task..."
             className="flex-1 px-4 py-2 border border-gray-300 rounded-lg"
           />
@@ -203,6 +225,9 @@ const TaskManager = () => {
               */}
               <button
                 data-testid={`toggle-task-${task.id}`}
+                 aria-label={`Mark ${task.text} as ${
+    task.completed ? "incomplete" : "complete"
+  }`}
                 onClick={() => toggleTask(task.id)}
                 className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
                   task.completed
@@ -224,7 +249,7 @@ const TaskManager = () => {
                     type="text"
                     value={editText}
                     onChange={(e) => setEditText(e.target.value)}
-                    onKeyPress={(e) => e.key === "Enter" && saveEdit()}
+                onKeyPress={(e) =>{ if ( e.key === "Enter")saveEdit()}}
                     className="flex-1 px-2 py-1 border border-gray-300 rounded"
                     autoFocus
                   />
@@ -269,6 +294,8 @@ const TaskManager = () => {
                   */}
                   <button
                     data-testid={`edit-task-${task.id}`}
+                      aria-label={`Edit ${task.text}`}
+
                     onClick={() => startEdit(task.id, task.text)}
                     className="text-blue-500 hover:text-blue-700"
                   >
@@ -280,6 +307,8 @@ const TaskManager = () => {
                   */}
                   <button
                     data-testid={`delete-task-${task.id}`}
+                      aria-label={`Delete ${task.text}`}
+
                     onClick={() => deleteTask(task.id)}
                     className="text-red-500 hover:text-red-700"
                   >
