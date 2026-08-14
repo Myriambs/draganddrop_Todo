@@ -154,6 +154,8 @@ const handleDrop = () => {
           <input
             type="text"
             id="searchInput"
+              aria-label="Search tasks"
+
             data-testid="search-input"
             placeholder="Filter tasks..."
             value={searchQuery}
@@ -170,6 +172,8 @@ const handleDrop = () => {
           */}
           <input
             data-testid="new-task-input"
+              aria-label="New task"
+
             type="text"
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
