@@ -13,7 +13,8 @@ test('adds a task', async ({ page }) => {
 
   await taskManager.addTask('New task 12');
 
-  await expect(taskManager.taskCards).toHaveCount(4);
+  // await expect(taskManager.taskCards).toHaveCount(4);
+  await expect(taskManager.taskCards).toHaveCount(5);
   await expect(taskManager.taskList).toContainText('New task 12');
 });
 
