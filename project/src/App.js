@@ -107,8 +107,7 @@ const handleDrop = () => {
   }, [isSearchVisible]);
 
   return (
-    <div data-testid="app" className="max-w-2xl mx-auto p-6 bg-gray-50 min-h-screen">
-      <div className="bg-white rounded-lg shadow-lg p-6">
+<main data-testid="app" className="max-w-2xl mx-auto p-6 bg-gray-50 min-h-screen">      <div className="bg-white rounded-lg shadow-lg p-6">
         <h1 data-testid="app-title" className="text-3xl font-bold text-gray-800 mb-8 text-center">
           Simple Task Manager (Drag & Drop ✅)
         </h1>
@@ -185,8 +184,7 @@ const handleDrop = () => {
           <button
             data-testid="add-task-btn"
             onClick={addTask}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-1"
-          >
+className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-1"          >
             <Plus size={20} /> Add
           </button>
         </div>
@@ -332,7 +330,7 @@ const handleDrop = () => {
         )}
 
       </div>
-    </div>
+    </main>
   );
 };
 
