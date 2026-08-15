@@ -1,32 +1,45 @@
 name: Playwright Tests
+
 on:
   push:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./Palywright
+
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: npm
+          cache-dependency-path: Palywright/package-lock.json
+
       - name: Install dependencies
         run: npm ci
-      - name: Install Playwright Browsers
+
+      - name: Install Playwright browsers
         run: npx playwright install --with-deps
+
       - name: Run Playwright tests
         run: npx playwright test
-      - name: Upload Playwright report
-  if: always()
-  uses: actions/upload-artifact@v4
-  with:
-    name: playwright-artifacts
-    path: |
-      playwright-report/
-      test-results/
-    retention-days: 14
+
+      - name: Upload Playwright artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: |
+            Palywright/playwright-report/
+            Palywright/test-results/
+          retention-days: 14
